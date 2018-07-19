@@ -68,5 +68,10 @@ def solve_linear_equation(eq):
     print("x =", result)
 
 
-equation = "2x + 5 - 3x + 4 * 5 = 3 * 2 - 3x + 4"
-solve_linear_equation(equation)
+def main():
+    equation = "2x + 5 - 3x + 4 * 5 = 3 * 2 - 3x + 4"
+    solve_linear_equation(equation)
+
+
+if __name__ == '__main__':
+    main()
