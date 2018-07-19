@@ -26,10 +26,26 @@ def separate_variables(string):
     return string
 
 
-def parsing(string):
-    tokens = separate_variables(string)
-    for i in range(0, len(tokens)):
-        print(tokens[i])
+def verify_op(regexs, string, pos):
+    for i in regexs:
+        print(i, string[pos])
+        if not re.match(i, string[pos]):
+            return False
+        pos += 1
+    return True
+
+
+def testing(eq = "10*x+10+20*x+10*20+x/10+20*x-20"):
+    print("equacao: ",eq)
+    regex_var = r"((?:\+|\-)?\d*(?:\*|\/)[a-zA-Z])"
+    var_op = re.findall(regex_var, eq)
+    var_op = ''.join(var_op)
+    print("operacoes das variaveis: ",var_op)
+    regex_const = r"((?:\+|\-|\*|\/)?\d+)(?!(\d*)(\*|\/)[a-zA-Z])"
+    const_op = re.findall(regex_const, eq)
+    const_op = [i[0] for i in const_op] #return a list of te first`s elements of list of tuple
+    const_op = ''.join(const_op)
+    print("operacoes das constantes: ",const_op)
 
 
 eq = "2x + 5 - 3x * 4 + 5 = 3 * 2 - 3x + 4 "
@@ -37,7 +53,7 @@ eq = remove_spaces(eq)
 eq = eq.split('=')
 before_equals_eq = eq[0]
 after_equals_eq = eq[1]
-parsing(before_equals_eq)
+testing()
 
 
-solve_linear_equation("2x+4=-12")
+
