@@ -1,5 +1,15 @@
+import re
+
+def remove_spaces(string):
+    string = string.replace(" ", '')
+    return string
+
+
 def solve_linear_equation(eq):
-    print("solving a equation")
+    eq = remove_spaces(eq)
+    eq = eq.split('=')
+    before_equals_eq = eq[0]
+    after_equals_eq = eq[1]
 
 
 def main():
