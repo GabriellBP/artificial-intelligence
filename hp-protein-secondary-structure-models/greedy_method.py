@@ -45,8 +45,7 @@ def greedy(matrix, matrix_size, sequence):
     while len(sequence) > 0:
         possible_moviments = generate_possible_moviments(matrix, current_x, current_y)
         if len(possible_moviments) == 0:
-            print('CAIU NA TRAP')
-            return 404  # not found :)
+            return 0  # not found :)
         value = sequence.pop(0)
         better_h = 0
 
@@ -90,15 +89,25 @@ def main():
                  'PPHPPHHPPPPHHPPPPHHPPPPHH',
                  'PPPHHPPHHPPPPPHHHHHHHPPHHPPPPHHPPHPP',
                  'PPHPPHHPPHHPPPPPHHHHHHHHHHPPPPPPHHPPHHPPHPPHHHHH',
-                 'PPHPPHPHPHHHHPHPPPHPPPHPPPPHPPPHPPPHPHHHHPHPHPHPHH']
-    sequence = list(sequences[0])
-    sequence_size = len(sequence)
-    optimal_seq = count_seq_h(sequence, sequence_size)
-    matrix_size = 2*sequence_size + 1  # never crosses a border
-    # matrix = [['' for x in range(matrix_size)] for y in range(matrix_size)]
-    matrix = np.array([''] * (matrix_size**2)).reshape((matrix_size, matrix_size))
-    optimal = greedy(matrix, matrix_size, sequence.copy()) - optimal_seq
-    print('-', optimal)
+                 'PPHPPHPHPHHHHPHPPPHPPPHPPPPHPPPHPPPHPHHHHPHPHPHPHH',
+                 'PPHHHPHHHHHHHHPPPHHHHHHHHHHPHPPPHHHHHHHHHHHHPPPPHHHHHHPHHPHP',
+                 'HHHHHHHHHHHHPHPHPPHHPPHHPPHPPHHPPHHPPHPPHHPPHHPPHPHPHHHHHHHHHHHH',
+                 'HHHHPPPPHHHHHHHHHHHHPPPPPPHHHHHHHHHHHHPPPHHHHHHHHHHHHPPPHHHHHHHHHHHHPPPHPPHHPPHHPPHPH',
+                 'PPPHHPPHHHHPPHHHPHHPHHPHHHHPPPPPPPPHHHHHHPPHHHHHHPPPPPPPPPHPHHPHHHHHHHHHHHPPHHHPHHPHPPHPHHHPPPPPPHHH']
+
+    for sequence in sequences:
+        sequence = list(sequence)
+        sequence_size = len(sequence)
+        optimal_seq = count_seq_h(sequence, sequence_size)
+        matrix_size = 2*sequence_size + 1  # never crosses a border
+        # matrix = [['' for x in range(matrix_size)] for y in range(matrix_size)]
+        matrix = np.array([''] * (matrix_size**2)).reshape((matrix_size, matrix_size))
+        result = greedy(matrix.copy(), matrix_size, sequence.copy())
+        while result == 0:
+            result = greedy(matrix.copy(), matrix_size, sequence.copy())
+        optimal = result - optimal_seq
+        print('Size:', sequence_size, 'Sequence:', ''.join(sequence))
+        print('Result:', -optimal)
 
 
 if __name__ == '__main__':
